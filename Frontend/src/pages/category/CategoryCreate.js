@@ -91,12 +91,7 @@ function CategoryCreate() {
             <div className="container">
                 <h2 className="text-center mt-5 mb-3">Add Category</h2>
                 <div className="card">
-                    <div className="card-header">
-                        <Link
-                            className="btn btn-outline-info float-right"
-                            to="/category">View All Category
-                        </Link>
-                    </div>
+                   
                     <div className="card-body">
                         <form   onSubmit={handleSave}>
                             <div className="form-group">
@@ -126,6 +121,11 @@ function CategoryCreate() {
                                 className="btn btn-outline-success mt-3">
                                 Add Category
                             </button>
+                            &nbsp;
+                            <Link
+                                className="btn btn-outline-success mt-3"
+                                to="/category">View All Category
+                            </Link>
                         </form>
                     </div>
                 </div>

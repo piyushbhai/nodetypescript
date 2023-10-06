@@ -3,19 +3,19 @@ var multer = require('multer');
 
 import { Products } from "../models/product";
 
-export const addProduct: RequestHandler = async (req, res, next) => {
+// export const addProduct: RequestHandler = async (req, res, next) => {
   
-  await upload(req,res,async function(err:any){
-      if (err)
-        return res.end("error uploading file");
-  });
-  // console.log(req.body); return
+//   await upload(req,res,async function(err:any){
+//       if (err)
+//         return res.end("error uploading file");
+//   });
+//   // console.log(req.body); return
   
-  var todos = await Products.create({ ...req.body });
-  return res
-    .status(200)
-    .json({ message: "Product created successfully", data: todos });
-};
+//   var todos = await Products.create({ ...req.body });
+//   return res
+//     .status(200)
+//     .json({ message: "Product created successfully", data: todos });
+// };
 
 export const deleteProduct: RequestHandler = async (req, res, next) => {
   const { id } = req.params;

@@ -5,6 +5,8 @@ import { json, urlencoded } from "body-parser";
 import userRoutes from "./routes/users";
 import productRoutes from "./routes/product";
 import categoryRoutes from "./routes/category";
+import passport from 'passport';
+import session from 'express-session';
 
 const app = express();
 app.use(cors())
@@ -30,6 +32,19 @@ app.use(
     res.status(500).json({ message: err.message });
   }
 );
+
+
+app.use(
+  session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 connection
   .sync()

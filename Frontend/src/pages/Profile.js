@@ -61,7 +61,7 @@ function Profile() {
             email,
             mobile,
             profileImage:profileImage.name,
-            Image,
+            file:profileImage,
             // password
         }
         // const formData = new FormData();

@@ -2,58 +2,56 @@ import { RequestHandler } from "express";
 const bcrypt = require("bcrypt")
 var multer = require('multer');
 require('dotenv').config();
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 import { Users } from "../models/user";
-const { MAIL_SETTINGS } = require('../constants/constant');
-import { Request, Response } from 'express';
+// const { MAIL_SETTINGS } = require('../constants/constant');
+import { Request, Response,NextFunction } from 'express';
 
 // const Strategy = require('passport-local');
 // const passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
 
+// var transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'bhavik.patel@rayvat.com',
+//     pass: '*LKJ4%tmR}'
+//   }
+// });
 
 
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'bhavik.patel@rayvat.com',
-    pass: '*LKJ4%tmR}'
-  }
-});
-
-
-export const registeruser: RequestHandler = async (req:Request, res:Response, next) => {
+// export const registeruser = async (req:Request, res:Response, next:NextFunction) => {
  
-  try {
-    console.log(req.file);
-    console.log(req.body);
-    return
-      var userdata = await Users.create({ ...req.body });
+//   try {
+//     console.log(req.file);
+//     console.log(req.body);
+//     return
+//       var userdata = await Users.create({ ...req.body });
 
-      await upload(req,res,async function(err:any){
-        if (err)
-            return res.end("error uploading file");
-      });
+//       await upload(req,res,async function(err:any){
+//         if (err)
+//             return res.end("error uploading file");
+//       });
     
      
-      await transporter.sendMail({
-        from: MAIL_SETTINGS.auth.user,
-        to: req.body.email, // list of receivers
-        subject: 'Product APP Registration Successful', // Subject line
-        html: `
-        <div class="container">
-          <h4>Thank you</h4>          
-        </div>
-      `,
-      });
-      return res
-        .status(200)
-        .json({ message: "User created successfully", data: userdata });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Server error' });
-  }
-};
+//       // await transporter.sendMail({
+//       //   from: MAIL_SETTINGS.auth.user,
+//       //   to: req.body.email, // list of receivers
+//       //   subject: 'Product APP Registration Successful', // Subject line
+//       //   html: `
+//       //   <div class="container">
+//       //     <h4>Thank you</h4>          
+//       //   </div>
+//       // `,
+//       // });
+//       return res
+//         .status(200)
+//         .json({ message: "User created successfully", data: userdata });
+//   } catch (error) {
+//     console.error(error);
+//     return res.status(500).json({ error: 'Server error' });
+//   }
+// };
 
 export const getUserById: RequestHandler = async (req, res, next) => {
   const { id } = req.params;
@@ -167,23 +165,23 @@ interface MulterRequest extends Request {
   file: any;
 }
 
-export const updateProfile: RequestHandler = async (req, res, next) => {
-  // console.log(req.body); return
-  const { id } = req.params;
-  // const { first_name, last_name, email, password, mobile } = req.body;
+// export const updateProfile: RequestHandler = async (req, res, next) => {
+//   // console.log(req.body); return
+//   const { id } = req.params;
+//   // const { first_name, last_name, email, password, mobile } = req.body;
  
   
-  await upload(req,res,async function(err:any){
-    // if(req.body.Image)
-    //  await Users.update({ profileImage:req.body.Image }, { where: { id },individualHooks: true });
-     if (err)
-        return res.end("error uploading file");
-  });
+//   await upload(req,res,async function(err:any){
+//     // if(req.body.Image)
+//     //  await Users.update({ profileImage:req.body.Image }, { where: { id },individualHooks: true });
+//      if (err)
+//         return res.end("error uploading file");
+//   });
  
-  await Users.update({ ...req.body }, { where: { id },individualHooks: true });
-  const updateProfile: Users | null = await Users.findByPk(id);
+//   await Users.update({ ...req.body }, { where: { id },individualHooks: true });
+//   const updateProfile: Users | null = await Users.findByPk(id);
 
-  return res
-    .status(200)
-    .json({ message: "Profile updated successfully", data: updateProfile });
-};
+//   return res
+//     .status(200)
+//     .json({ message: "Profile updated successfully", data: updateProfile });
+// };

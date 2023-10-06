@@ -97,7 +97,7 @@ function ProductEdit() {
                                     name="name" />
                             </div><br/>
                             <div className="form-group">
-                                <label htmlFor="name">Product Image</label>
+                                <label htmlFor="name">Product Image</label> <br/>
                                 {image !="" && <>
                                 <img width={200} src={BASEURL+'uploads/'+image}/> <br/> </>}
                             </div><br/>

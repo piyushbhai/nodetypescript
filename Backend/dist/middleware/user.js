@@ -11,40 +11,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkDuplicateEmail = void 0;
 const user_1 = require("../models/user");
-const checkDuplicateEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const checkDuplicateEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     user_1.Users.findOne({
         where: {
             email: req.body.email
         }
     }).then(user => {
         if (user) {
-            res.status(400).send({
-                message: "Failed! Email is already in use!"
-            });
-            return;
+            // res.status(400).send({
+            //   message: "Failed! Email is already in use!"
+            // });
+            return false;
         }
-        next();
     });
+    return true;
 });
 exports.checkDuplicateEmail = checkDuplicateEmail;
-// checkDuplicateUsernameOrEmail = (req, res, next) => {
-//     // Email
-//     Users.findOne({
-//       where: {
-//         email: req.body.email
-//       }
-//     }).then(user => {
-//       if (user) {
-//         res.status(400).send({
-//           message: "Failed! Email is already in use!"
-//         });
-//         return;
-//       }
-//       next();
-//     }); 
-// };
-// const verifySignUp = {
-//     checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
-//     // checkRolesExisted: checkRolesExisted
-//   };
-//   module.exports = verifySignUp;

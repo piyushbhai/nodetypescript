@@ -52,7 +52,7 @@ function ProductEdit() {
                 setName(product.product_name);
                 setprice(product.price);
                 setImage(product.image);
-                // console.log(product.categories);
+                // console.log(product);
                 setcategory(product.categories && JSON.parse(product.categories));
             })
             .catch(function (error) {
@@ -146,7 +146,9 @@ function ProductEdit() {
                                     name="name" />
                             </div><br/>
                             <div className="form-group">
-                                <label htmlFor="name">Product Image</label>
+                                <label htmlFor="name">Product Image</label> 
+                                {image !=="" && <>
+                                <br/> <img width={200} src={BASEURL+'uploads/'+image}/> <br/><br/> </>}
                                 <input
                                     onChange={handleFileUpload}
                                    type="file"

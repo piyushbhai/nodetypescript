@@ -9,23 +9,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProduct = exports.getProductById = exports.getAllProduct = exports.deleteProduct = exports.addProduct = void 0;
+exports.updateProduct = exports.getProductById = exports.getAllProduct = exports.deleteProduct = void 0;
 var multer = require('multer');
 const product_1 = require("../models/product");
-const addProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    yield upload(req, res, function (err) {
-        return __awaiter(this, void 0, void 0, function* () {
-            if (err)
-                return res.end("error uploading file");
-        });
-    });
-    // console.log(req.body); return
-    var todos = yield product_1.Products.create(Object.assign({}, req.body));
-    return res
-        .status(200)
-        .json({ message: "Product created successfully", data: todos });
-});
-exports.addProduct = addProduct;
+// export const addProduct: RequestHandler = async (req, res, next) => {
+//   await upload(req,res,async function(err:any){
+//       if (err)
+//         return res.end("error uploading file");
+//   });
+//   // console.log(req.body); return
+//   var todos = await Products.create({ ...req.body });
+//   return res
+//     .status(200)
+//     .json({ message: "Product created successfully", data: todos });
+// };
 const deleteProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const deletedTodo = yield product_1.Products.findByPk(id);

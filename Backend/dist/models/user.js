@@ -15,7 +15,7 @@ let Users = class Users extends sequelize_typescript_1.Model {
         if (user.password) {
             var salt = bcrypt.genSaltSync(saltRounds);
             user.password = bcrypt.hashSync(user.password, salt);
-            console.log(user.password);
+            // console.log(user.password);
         }
     }
     static hashPasswordBeforeUpdate(user) {

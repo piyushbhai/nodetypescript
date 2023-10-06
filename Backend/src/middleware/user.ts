@@ -1,45 +1,21 @@
 import { Users } from "../models/user";
 import { RequestHandler } from "express";
+import { Request, Response } from 'express';
 
-export const checkDuplicateEmail: RequestHandler = async (req, res, next) => {
+export const checkDuplicateEmail = async (req:Request, res:Response) => {
   Users.findOne({
           where: {
             email: req.body.email
           }
         }).then(user => {
           if (user) {
-            res.status(400).send({
-              message: "Failed! Email is already in use!"
-            });
-            return;
+            // res.status(400).send({
+            //   message: "Failed! Email is already in use!"
+            // });
+            return false;
           }
     
-          next();
+      
         }); 
+        return true
 };
-
-
-// checkDuplicateUsernameOrEmail = (req, res, next) => {
-//     // Email
-//     Users.findOne({
-//       where: {
-//         email: req.body.email
-//       }
-//     }).then(user => {
-//       if (user) {
-//         res.status(400).send({
-//           message: "Failed! Email is already in use!"
-//         });
-//         return;
-//       }
-
-//       next();
-//     }); 
-// };
-
-// const verifySignUp = {
-//     checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
-//     // checkRolesExisted: checkRolesExisted
-//   };
-  
-//   module.exports = verifySignUp;

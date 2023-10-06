@@ -26,14 +26,14 @@ function Registration() {
         formData.append('password', password);
         formData.append('mobile', mobile);
         formData.append('profileImage', profileImage.name);
-        formData.append('Image', profileImage);
+        formData.append('file', profileImage);
 
-        // {
-        //     first_name: first_name,
-        //     last_name: last_name,
-        //     email: email,
-        //     password: password,
-        //     mobile: mobile,    
+        // let obj = {
+        //     first_name,
+        //     last_name,
+        //     email,
+        //     password,
+        //     mobile,    
         //     profileImage:profileImage.name,
         //     Image:profileImage,        
         //   }
@@ -41,6 +41,8 @@ function Registration() {
             headers: {
             //   "Content-Type": "application/json",
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            // "Authorization": "Bearer " + access_token,
+            // "Content-Type": "multipart/form-data"
 
             }})
           .then(function (response) {

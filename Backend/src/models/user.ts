@@ -40,14 +40,14 @@ export class Users extends Model {
     type: DataType.STRING,
     allowNull: true,
   })
-  profileImage!: string;
+  profileImage?: string;
   
   @BeforeCreate
   static hashPassword(user: Users) {
     if (user.password) {            
         var salt = bcrypt.genSaltSync(saltRounds);
         user.password = bcrypt.hashSync(user.password, salt);
-        console.log(user.password);
+        // console.log(user.password);
         
     }
   }
