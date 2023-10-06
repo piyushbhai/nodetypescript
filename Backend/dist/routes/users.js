@@ -41,15 +41,9 @@ const upload = (0, multer_1.default)({ storage });
 router.post('/', upload.single('file'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
-        // console.log(req.body); return
-        let checkdup = yield (0, user_3.checkDuplicateEmail)(req, res);
-        if (!checkdup) {
-            return res.status(400).send({
-                message: "Failed! Email is already in use!"
-            });
-        }
         let ss = (_a = req === null || req === void 0 ? void 0 : req.file) === null || _a === void 0 ? void 0 : _a.originalname;
         var userdata = yield user_1.Users.create(Object.assign(Object.assign({}, req.body), { profileImage: ss }));
+        // console.log(userdata);
         transporter.sendMail({
             from: MAIL_SETTINGS.auth.user,
             to: req.body.email,
@@ -78,7 +72,7 @@ router.post("/login", user_2.loginuser);
 // router.get("/", getAllToDo);
 router.get("/:id", user_3.is_authenticate, user_2.getUserById);
 // router.put("/:id", updateProfile);
-router.put('/:id', upload.single('file'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/:id', [user_3.is_authenticate, upload.single('file')], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     const { id } = req.params;
     try {

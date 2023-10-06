@@ -78,14 +78,15 @@ function ProductEdit() {
         let obj = {
             product_name: name,
             price: price,
-            image:image.name,
-            productImage:image,
+            image:image? image.name:"",
+            productImage:image ? image:"",
             categories: category? JSON.stringify(category) :""
         }
         axios.put(`${BASEURL}product/${id}`, obj ,{
                 headers: {
                     "Content-Type": "multipart/form-data",
-            }})
+                    "Authorization": "Bearer " + localStorage.getItem("token"),            
+                }})
             .then(function (response) {
                 Swal.fire({
                     icon: 'success',

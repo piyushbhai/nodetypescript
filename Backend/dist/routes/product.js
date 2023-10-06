@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const product_1 = require("../models/product");
+const user_1 = require("../middleware/user");
 const product_2 = require("../controller/product");
 const router = (0, express_1.Router)();
 const storage = multer_1.default.diskStorage({
@@ -26,7 +27,7 @@ const storage = multer_1.default.diskStorage({
     },
 });
 const upload = (0, multer_1.default)({ storage });
-router.post('/', upload.single('productImage'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post('/', [user_1.is_authenticate, upload.single('productImage')], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         let ss = (_a = req === null || req === void 0 ? void 0 : req.file) === null || _a === void 0 ? void 0 : _a.originalname;
@@ -40,10 +41,10 @@ router.post('/', upload.single('productImage'), (req, res) => __awaiter(void 0, 
         res.status(500).json({ error: 'Server error' });
     }
 }));
-router.get("/", product_2.getAllProduct);
-router.get("/:id", product_2.getProductById);
+router.get("/", user_1.is_authenticate, product_2.getAllProduct);
+router.get("/:id", user_1.is_authenticate, product_2.getProductById);
 // router.put("/:id", updateProduct);
-router.put('/:id', upload.single('productImage'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.put('/:id', [user_1.is_authenticate, upload.single('productImage')], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     const { id } = req.params;
     try {
@@ -59,5 +60,5 @@ router.put('/:id', upload.single('productImage'), (req, res) => __awaiter(void 0
         res.status(500).json({ error: 'Server error' });
     }
 }));
-router.delete("/:id", product_2.deleteProduct);
+router.delete("/:id", user_1.is_authenticate, product_2.deleteProduct);
 exports.default = router;

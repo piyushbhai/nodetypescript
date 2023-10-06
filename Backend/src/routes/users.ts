@@ -36,22 +36,14 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
-const upload = multer({ storage });
+const upload = multer({storage});
 
 router.post('/',upload.single('file'), async(req: Request, res: Response) => {
   try {
-    // console.log(req.body); return
-    
-    let checkdup =await checkDuplicateEmail(req, res)
-    if(!checkdup){
-      return res.status(400).send({
-        message: "Failed! Email is already in use!"
-      });
-    }
     let ss= req?.file?.originalname
     var userdata = await Users.create({ ...req.body,profileImage:ss });
-
+    // console.log(userdata);
+    
     transporter.sendMail({
         from: MAIL_SETTINGS.auth.user,
         to: req.body.email, // list of receivers
@@ -83,8 +75,8 @@ router.post("/login", loginuser);
 router.get("/:id",is_authenticate, getUserById);
 
 // router.put("/:id", updateProfile);
-router.put('/:id',upload.single('file'), async(req: Request, res: Response) => {
-  is_authenticate
+router.put('/:id',[is_authenticate, upload.single('file')], async(req: Request, res: Response) => {
+  
   const { id } = req.params;
   try {
     let ss= req?.file?.originalname

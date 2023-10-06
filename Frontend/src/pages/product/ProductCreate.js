@@ -69,6 +69,7 @@ function ProductCreate() {
         dispatch(addproduct(obj))
         axios.post(`${BASEURL}product`,obj,{
             headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token"),    
               "Content-Type": "multipart/form-data",
             }})
             .then(function (response) {

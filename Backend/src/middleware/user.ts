@@ -4,22 +4,24 @@ import { Request, Response,NextFunction } from 'express';
 const jwt = require('jsonwebtoken');
 
 
-export const checkDuplicateEmail = async (req:Request, res:Response) => {
+export const checkDuplicateEmail = async (req:Request, res:Response,next: NextFunction) => {
   Users.findOne({
           where: {
             email: req.body.email
           }
         }).then(user => {
           if (user) {
-            // res.status(400).send({
-            //   message: "Failed! Email is already in use!"
-            // });
+            res.status(400).send({
+              message: "Failed! Email is already in use!"
+            });
             return false;
           }
     
       
-        }); 
+        });
+        next() 
         return true
+        
 };
 
 

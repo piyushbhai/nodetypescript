@@ -28,7 +28,8 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/',upload.single('productImage'), async(req: Request, res: Response) => {
+router.post('/',[is_authenticate, upload.single('productImage')], async(req: Request, res: Response) => {
+  
   try {
     let ss= req?.file?.originalname
     var userdata = await Products.create({ ...req.body,image:ss });
@@ -48,8 +49,8 @@ router.get("/:id", is_authenticate, getProductById);
 
 // router.put("/:id", updateProduct);
 
-router.put('/:id',upload.single('productImage'), async(req: Request, res: Response) => {
-  is_authenticate
+router.put('/:id',[is_authenticate, upload.single('productImage')], async(req: Request, res: Response) => {
+  
   const { id } = req.params;
   try {
     let ss= req?.file?.originalname

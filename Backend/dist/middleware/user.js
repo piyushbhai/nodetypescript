@@ -12,19 +12,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.is_authenticate = exports.checkDuplicateEmail = void 0;
 const user_1 = require("../models/user");
 const jwt = require('jsonwebtoken');
-const checkDuplicateEmail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const checkDuplicateEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     user_1.Users.findOne({
         where: {
             email: req.body.email
         }
     }).then(user => {
         if (user) {
-            // res.status(400).send({
-            //   message: "Failed! Email is already in use!"
-            // });
+            res.status(400).send({
+                message: "Failed! Email is already in use!"
+            });
             return false;
         }
     });
+    next();
     return true;
 });
 exports.checkDuplicateEmail = checkDuplicateEmail;
@@ -61,7 +62,6 @@ const is_authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, fu
             });
         }
         catch (err) {
-            console.log('err', err);
             return res.status(422).json({
                 error: "Invalid token",
             });

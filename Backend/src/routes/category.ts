@@ -14,7 +14,7 @@ import {
 
 const router = Router();
 // checkDuplicateEmail
-router.post("/", addCategory);
+router.post("/",is_authenticate, addCategory);
 
 router.get("/",is_authenticate, getAllCategory);
 
