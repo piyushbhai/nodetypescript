@@ -21,7 +21,10 @@ function ProductList() {
 
    
     const fetchProductList = () => {
-        axios.get(BASEURL+'product')
+        axios.get(BASEURL+'product',{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 
                 setProductList(response.data.data);
@@ -47,7 +50,10 @@ function ProductList() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${BASEURL}product/${id}`)
+                axios.delete(`${BASEURL}product/${id}`,{
+                    headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),            
+                    }})
                     .then(function (response) {
                         Swal.fire({
                             icon: 'success',

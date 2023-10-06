@@ -27,7 +27,7 @@ function Login() {
             password: password
         })
             .then(function (response) {
-                // console.log(response); return
+                // console.log(response.data.token); return
                 // validate from local storage and on successful login create session cookie 
                 let userdata = JSON.parse(localStorage.getItem("userdata"));
                 // console.log(userdata.email response.data.data.email  );
@@ -36,7 +36,7 @@ function Login() {
                     localStorage.setItem("user", JSON.stringify(response.data));
                     
                     // i use password as token for demo purpose
-                    localStorage.setItem("token", response.data.password);
+                    localStorage.setItem("token", response.data.token);
                     Swal.fire({
                         icon: 'success',
                         title: 'Login successfully done!',

@@ -4,12 +4,15 @@ import { Users } from '../models/user';
 import bcrypt from 'bcrypt';
 
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
+  new LocalStrategy(async (email, password, done) => {
+    console.log(email, password); 
+    
     try {
-      const user = await Users.findOne({ where: { username } });
-
+      const user = await Users.findOne({ where: { email } });
+      console.log(user); 
+      
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' });
+        return done(null, false, { message: 'Incorrect email' });
       }
 
       const passwordMatch = await bcrypt.compare(password, user.password);
@@ -37,3 +40,5 @@ passport.deserializeUser(async (id: number, done) => {
     done(error);
   }
 });
+
+export default passport

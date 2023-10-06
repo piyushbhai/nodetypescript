@@ -6,14 +6,14 @@ import { Users } from "../models/user";
 const { MAIL_SETTINGS } = require('../constants/constant');
 import passport from 'passport';
 
-
 import {
   getUserById,
   loginuser  
 } from "../controller/user";
 
 import {
-  checkDuplicateEmail
+  checkDuplicateEmail,
+  is_authenticate
 } from "../middleware/user";
 
 const router = Router();
@@ -73,13 +73,18 @@ router.post('/',upload.single('file'), async(req: Request, res: Response) => {
 
 
 // router.post("/", checkDuplicateEmail,registeruser);
-router.post("/login", passport.authenticate('local'), loginuser);
+// ,  passport.authenticate('local', {
+//   successRedirect: '/dashboard',
+//   failureRedirect: '/login',
+// })
+router.post("/login", loginuser);
 // router.get("/", getAllToDo);
 
-router.get("/:id", getUserById);
+router.get("/:id",is_authenticate, getUserById);
 
 // router.put("/:id", updateProfile);
 router.put('/:id',upload.single('file'), async(req: Request, res: Response) => {
+  is_authenticate
   const { id } = req.params;
   try {
     let ss= req?.file?.originalname

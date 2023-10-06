@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-// var passport = require('passport')
 const multer_1 = __importDefault(require("multer"));
 const nodemailer = require('nodemailer');
 const user_1 = require("../models/user");
@@ -71,9 +70,13 @@ router.post('/', upload.single('file'), (req, res) => __awaiter(void 0, void 0, 
     }
 }));
 // router.post("/", checkDuplicateEmail,registeruser);
+// ,  passport.authenticate('local', {
+//   successRedirect: '/dashboard',
+//   failureRedirect: '/login',
+// })
 router.post("/login", user_2.loginuser);
 // router.get("/", getAllToDo);
-router.get("/:id", user_2.getUserById);
+router.get("/:id", user_3.is_authenticate, user_2.getUserById);
 // router.put("/:id", updateProfile);
 router.put('/:id', upload.single('file'), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;

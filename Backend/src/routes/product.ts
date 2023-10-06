@@ -3,6 +3,10 @@ import { Request, Response } from 'express';
 import multer from 'multer';
 import { Products } from "../models/product";
 
+import {
+  is_authenticate
+} from "../middleware/user";
+
 
 import {
   getAllProduct,
@@ -38,13 +42,14 @@ router.post('/',upload.single('productImage'), async(req: Request, res: Response
   }
 });
 
-router.get("/", getAllProduct);
+router.get("/", is_authenticate, getAllProduct);
 
-router.get("/:id", getProductById);
+router.get("/:id", is_authenticate, getProductById);
 
 // router.put("/:id", updateProduct);
 
 router.put('/:id',upload.single('productImage'), async(req: Request, res: Response) => {
+  is_authenticate
   const { id } = req.params;
   try {
     let ss= req?.file?.originalname
@@ -59,6 +64,6 @@ router.put('/:id',upload.single('productImage'), async(req: Request, res: Respon
   }
 });
 
-router.delete("/:id", deleteProduct);
+router.delete("/:id", is_authenticate, deleteProduct);
 
 export default router;

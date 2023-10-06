@@ -27,7 +27,10 @@ function ProductEdit() {
 
 
     const getCat = async(e) => {
-        await axios.get(`${BASEURL}category`)
+        await axios.get(`${BASEURL}category`,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
         .then(function (response) {
             let cat = response.data.data
             let newcat =  cat.map(item=>{
@@ -46,7 +49,10 @@ function ProductEdit() {
     })
     }
     const getprod = async(e) => {
-        await  axios.get(`${BASEURL}product/${id}`)
+        await  axios.get(`${BASEURL}product/${id}`,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 let product = response.data.data
                 setName(product.product_name);
@@ -78,8 +84,7 @@ function ProductEdit() {
         }
         axios.put(`${BASEURL}product/${id}`, obj ,{
                 headers: {
-                  "Content-Type": "multipart/form-data",
-               
+                    "Content-Type": "multipart/form-data",
             }})
             .then(function (response) {
                 Swal.fire({

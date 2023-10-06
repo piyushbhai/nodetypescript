@@ -24,7 +24,11 @@ function CategoryList() {
 
    
     const fetchCategoryList = () => {
-        axios.get(BASEURL+'category')
+        let token = localStorage.getItem('token')
+        axios.get(BASEURL+'category',{
+            headers: {
+            "Authorization": "Bearer " + token,            
+            }})
             .then(function (response) {
                 // console.log(response.data.data);
                 setCategoryList(response.data.data);
@@ -45,7 +49,10 @@ function CategoryList() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${BASEURL}Category/${id}`)
+                axios.delete(`${BASEURL}Category/${id}`,{
+                    headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token"),            
+                    }})
                     .then(function (response) {
                         Swal.fire({
                             icon: 'success',

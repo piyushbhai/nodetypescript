@@ -23,7 +23,10 @@ function CategoryCreate() {
             navigate("/");
         }
 
-        axios.get(`${BASEURL}category`)
+        axios.get(`${BASEURL}category`,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 let cat = response.data.data
                 let newcat =  cat.map(item=>{
@@ -62,7 +65,10 @@ function CategoryCreate() {
         }
         dispatch(addcat(obj))
 // return
-        axios.post(`${BASEURL}category`, obj)
+        axios.post(`${BASEURL}category`, obj, {
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 Swal.fire({
                     icon: 'success',

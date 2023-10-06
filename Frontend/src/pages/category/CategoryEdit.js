@@ -21,7 +21,10 @@ function CategoryEdit() {
             navigate("/");
         }
 
-        axios.get(`${BASEURL}category`)
+        axios.get(`${BASEURL}category`,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
         .then(function (response) {
             let cat = response.data.data
             let newcat =  cat.map(item=>{
@@ -39,7 +42,10 @@ function CategoryEdit() {
             })
         })
 
-        axios.get(`${BASEURL}category/${id}`)
+        axios.get(`${BASEURL}category/${id}`,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 let Category = response.data.data
                 setName(Category.category_name);
@@ -71,7 +77,10 @@ function CategoryEdit() {
         axios.put(`${BASEURL}category/${id}`, {
             category_name: name,
             parent_category: category?JSON.stringify(category):"",
-        })
+        },{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 Swal.fire({
                     icon: 'success',

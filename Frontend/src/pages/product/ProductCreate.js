@@ -26,7 +26,10 @@ function ProductCreate() {
             navigate("/");
         }
 
-        axios.get(`${BASEURL}category`)
+        axios.get(`${BASEURL}category`,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 let cat = response.data.data
                 let newcat =  cat.map(item=>{

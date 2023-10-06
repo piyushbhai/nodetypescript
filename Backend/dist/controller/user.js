@@ -15,6 +15,7 @@ var multer = require('multer');
 require('dotenv').config();
 // const nodemailer = require('nodemailer');
 const user_1 = require("../models/user");
+const jwt = require("jsonwebtoken");
 // const Strategy = require('passport-local');
 // const passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
@@ -64,43 +65,6 @@ exports.getUserById = getUserById;
 let saltRounds = 10;
 const loginuser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
-    // console.log("LocalStrategy called");
-    // passport.use(new LocalStrategy({
-    //     usernameField : email,
-    //     passwordField : password
-    // },
-    // function(email:any, password:any, done:any) {
-    //   //  console.log(username); return
-    //    const users: any | null = Users.findOne({
-    //       where: {
-    //         email: email,
-    //         // password: hashpassword
-    //       }
-    //     });
-    //     if(users==null){
-    //   return res
-    //   .status(401)
-    //   .json({ message: "Login Failed! Please enter correct username and password"});  
-    // }else{
-    //   const result =  bcrypt.compare(password, users.password);
-    //   if(result){
-    //     return res
-    //     .status(200)
-    //     .json({ message: "Login successfully", data: users });
-    //   }else{
-    //     return res
-    //    .status(401)
-    //     .json({ message: "Login Failed! Please enter correct username and password"}); 
-    //   }
-    // }
-    //     console.log(users); return
-    // }))
-    // console.log(email); return
-    // console.log(email); return
-    // var salt = bcrypt.genSaltSync(saltRounds);
-    // let hashpassword = bcrypt.hashSync(password, salt);
-    // const result = await bcrypt.compare(password, hashpassword);
-    // console.log(result);
     // return
     const users = yield user_1.Users.findOne({
         where: {
@@ -116,9 +80,12 @@ const loginuser = (req, res, next) => __awaiter(void 0, void 0, void 0, function
     else {
         const result = yield bcrypt.compare(password, users.password);
         if (result) {
+            const theToken = jwt.sign({
+                email,
+            }, "the-super-strong-secrect", {});
             return res
                 .status(200)
-                .json({ message: "Login successfully", data: users });
+                .json({ message: "Login successfully", data: users, token: theToken });
         }
         else {
             return res

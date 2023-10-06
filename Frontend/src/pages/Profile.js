@@ -29,7 +29,10 @@ function Profile() {
     const getdata = async(e) => {
         let user = JSON.parse(localStorage.getItem('user')).data;
         // console.log(user); return
-        await axios.get(`${BASEURL}users/${user.id}`)
+        await axios.get(`${BASEURL}users/${user.id}` ,{
+            headers: {
+            "Authorization": "Bearer " + localStorage.getItem("token"),            
+            }})
             .then(function (response) {
                 let data = response.data.data
                 setfName(data.first_name);
@@ -73,9 +76,11 @@ function Profile() {
         // if(password==""){
         //     delete(obj.password)
         // }
+       
         axios.put(`${BASEURL}users/${user.id}`,obj,{
             headers: {
               "Content-Type": "multipart/form-data",
+              "Authorization": "Bearer " + localStorage.getItem("token")
             }})
             .then(function (response) {
                 Swal.fire({

@@ -9,19 +9,19 @@ import {
 } from "../controller/category";
 
 import {
-  checkDuplicateEmail
+  is_authenticate
 } from "../middleware/user";
 
 const router = Router();
 // checkDuplicateEmail
 router.post("/", addCategory);
 
-router.get("/", getAllCategory);
+router.get("/",is_authenticate, getAllCategory);
 
-router.get("/:id", getCategoryById);
+router.get("/:id",is_authenticate ,getCategoryById);
 
-router.put("/:id", updateCategory);
+router.put("/:id", is_authenticate, updateCategory);
 
-router.delete("/:id", deleteCategory);
+router.delete("/:id",is_authenticate, deleteCategory);
 
 export default router;

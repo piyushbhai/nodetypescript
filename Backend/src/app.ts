@@ -1,12 +1,14 @@
 import express from "express";
 var cors = require('cors')
+var session = require('express-session')
+// import session from "'express-session'";
 import connection from "./db/config";
 import { json, urlencoded } from "body-parser";
 import userRoutes from "./routes/users";
 import productRoutes from "./routes/product";
 import categoryRoutes from "./routes/category";
 import passport from 'passport';
-import session from 'express-session';
+import './config/passport'; // Import the passport configuration
 
 const app = express();
 app.use(cors())
